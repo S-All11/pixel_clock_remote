@@ -52,18 +52,18 @@ void loop() {
   M5.update();  // M5Stackのボタンの状態を更新
   
   // ボタンA, B, Cの操作でtimeCodeを設定
-  if (M5.BtnA.wasPressed()) {
+  if (M5.BtnA.isPressed()) {
     timeCode = "1111";  // 例えば、ボタンAを押すと1234に設定
     M5.Lcd.setCursor(0, 50);
     M5.Lcd.println("Time Code set to 1111");
     
   }
-  if (M5.BtnB.wasPressed()) {
+  if (M5.BtnB.isPressed()) {
     timeCode = "1234";  // 例えば、ボタンBを押すと1111に設定
     M5.Lcd.setCursor(0, 50);
     M5.Lcd.println("Time Code set to 1234");
   }
-  if (M5.BtnC.wasPressed()) {
+  if (M5.BtnC.isPressed()) {
     timeCode = "9999";  // 例えば、ボタンCを押すと9999に設定
     M5.Lcd.setCursor(0, 50);
     M5.Lcd.println("Time Code set to 9999");
