@@ -6,8 +6,6 @@
 const char* ssid = "PI-AP";
 const char* password = "6v5wh465333px";
 
-int lcd_conut = 0;
-
 // HTTPサーバーのポート番号を指定
 WebServer server(80);//
 
@@ -21,6 +19,9 @@ void handleRoot() {
   seting_time = timeCode;
   // クライアントに現在のseting_timeを返す
   server.send(200, "text/plain", seting_time);
+  if(seting_time!="9999"){
+    timeCode = 9998;
+  }
 }
 
 void setup() {
@@ -35,10 +36,8 @@ void setup() {
   }
   
   M5.Lcd.println("\nConnected to WiFi!");
-  lcd_conut++;
   M5.Lcd.print("IP address: ");
   M5.Lcd.println(WiFi.localIP());
-  lcd_conut++;
   
   // ルートURLにアクセスがあった場合のハンドラーを設定
   server.on("/", handleRoot);
@@ -54,35 +53,21 @@ void loop() {
   
   // ボタンA, B, Cの操作でtimeCodeを設定
   if (M5.BtnA.wasPressed()) {
-    timeCode = "1234";  // 例えば、ボタンAを押すと1234に設定
-    M5.Lcd.setCursor(0, 50);
-    M5.Lcd.println("Time Code set to 1234");
-    //timeCode = timeCode+10;
-    seting_time = timeCode;
-    server.send(200, "text/plain", seting_time);
-    timeCode = 9998;
-  }
-  if (M5.BtnB.wasPressed()) {
-    timeCode = "1111";  // 例えば、ボタンBを押すと1111に設定
+    timeCode = "1111";  // 例えば、ボタンAを押すと1234に設定
     M5.Lcd.setCursor(0, 50);
     M5.Lcd.println("Time Code set to 1111");
-    //timeCode = timeCode-10;
-    seting_time = timeCode;
-    server.send(200, "text/plain", seting_time);
-    timeCode = 9998;
+    
+  }
+  if (M5.BtnB.wasPressed()) {
+    timeCode = "1234";  // 例えば、ボタンBを押すと1111に設定
+    M5.Lcd.setCursor(0, 50);
+    M5.Lcd.println("Time Code set to 1234");
   }
   if (M5.BtnC.wasPressed()) {
     timeCode = "9999";  // 例えば、ボタンCを押すと9999に設定
     M5.Lcd.setCursor(0, 50);
     M5.Lcd.println("Time Code set to 9999");
-    seting_time = timeCode;
-    server.send(200, "text/plain", seting_time);
   }
-  // lcd_conut++;
-  // if(lcd_conut>=9999){
-  //   M5.Lcd.clear(color);
-  //   lcd_conut = 0;
-  // }
 }
 
 // void time_command(){
